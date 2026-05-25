@@ -4,7 +4,14 @@
 require_once __DIR__ . '/../bootstrap.php';
 
 // Parse the database URL from environment variables
+if (empty($_ENV['DATABASE_URL'])) {
+    die("DATABASE_URL is not set. Configure it in Render or your .env file.");
+}
+
 $dbUrl = parse_url($_ENV['DATABASE_URL']);
+if ($dbUrl === false || !isset($dbUrl['host'], $dbUrl['user'], $dbUrl['pass'], $dbUrl['path'], $dbUrl['port'])) {
+    die("DATABASE_URL is invalid. Expected format: postgresql://USER:PASSWORD@HOST:PORT/DBNAME");
+}
 
 $host = $dbUrl['host'];
 $username = $dbUrl['user'];

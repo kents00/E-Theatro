@@ -124,7 +124,7 @@ VALUES
   'BSIT',
   'Singing',
   'juan@example.com',
-  '$2y$10$samplehashedpassword1',
+  '$2y$12$FuxGhwq4ecFFHEp4Aqwo..Eb/IgKQnfW/cH8eFzcDNHmBSPI8Yhv.',
   'student',
   'Pending'
 ),
@@ -137,7 +137,7 @@ VALUES
   'Administration',
   'Management',
   'admin@example.com',
-  '$2y$10$samplehashedpassword2',
+  '$2y$12$FuxGhwq4ecFFHEp4Aqwo..Eb/IgKQnfW/cH8eFzcDNHmBSPI8Yhv.',
   'admin',
   'Approved'
 )

@@ -23,7 +23,7 @@ $unread_count = $unread_result->fetch_assoc()['count'] ?? 0;
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/Etheatro/">
+            <a class="navbar-brand" href="<?php echo urlFor(''); ?>">
                 <i class="fas fa-theater-masks"></i> ETHEATRO
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

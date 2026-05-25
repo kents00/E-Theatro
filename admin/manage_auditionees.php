@@ -12,41 +12,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
     if ($action === 'schedule') {
         $audition_date = sanitize($_POST['audition_date'] ?? '');
-        
+
         if (empty($audition_date)) {
             $error = 'Audition date is required.';
         } else {
             $audition_date_escaped = $conn->real_escape_string($audition_date);
             $conn->query("UPDATE auditionees SET audition_date = '$audition_date_escaped', status = 'Ready to Audition' WHERE id = $student_id AND role = 'student'");
-            
+
             // Create notification
             $message = "Your audition has been scheduled for " . date('M d, Y H:i', strtotime($audition_date));
             $message_escaped = $conn->real_escape_string($message);
             $conn->query("INSERT INTO notifications (auditionee_id, message, type) VALUES ($student_id, '$message_escaped', 'schedule')");
-            
+
             $success = 'Audition scheduled successfully!';
         }
     } elseif ($action === 'approve') {
         $feedback = sanitize($_POST['feedback'] ?? '');
         $feedback_escaped = $conn->real_escape_string($feedback);
         $conn->query("UPDATE auditionees SET status = 'Approved', feedback = '$feedback_escaped' WHERE id = $student_id AND role = 'student'");
-        
+
         // Create notification
         $message = "Congratulations! You have been approved for the production.";
         $message_escaped = $conn->real_escape_string($message);
         $conn->query("INSERT INTO notifications (auditionee_id, message, type) VALUES ($student_id, '$message_escaped', 'status_update')");
-        
+
         $success = 'Student approved!';
     } elseif ($action === 'reject') {
         $feedback = sanitize($_POST['feedback'] ?? '');
         $feedback_escaped = $conn->real_escape_string($feedback);
         $conn->query("UPDATE auditionees SET status = 'Rejected', feedback = '$feedback_escaped' WHERE id = $student_id AND role = 'student'");
-        
+
         // Create notification
         $message = "Thank you for auditioning. We will consider you for future productions.";
         $message_escaped = $conn->real_escape_string($message);
         $conn->query("INSERT INTO notifications (auditionee_id, message, type) VALUES ($student_id, '$message_escaped', 'status_update')");
-        
+
         $success = 'Student rejected.';
     }
 }
@@ -78,7 +78,7 @@ $rejected_count = $conn->query("SELECT COUNT(*) as count FROM auditionees WHERE 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/Etheatro/">
+            <a class="navbar-brand" href="<?php echo urlFor(''); ?>">
                 <i class="fas fa-theater-masks"></i> ETHEATRO
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -87,7 +87,7 @@ $rejected_count = $conn->query("SELECT COUNT(*) as count FROM auditionees WHERE 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/Etheatro/students/dashboard.php">Dashboard</a>
+                        <a class="nav-link" href="<?php echo urlFor('students/dashboard.php'); ?>">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="manageregistrants.php">Manage Registrants</a>
@@ -186,7 +186,7 @@ $rejected_count = $conn->query("SELECT COUNT(*) as count FROM auditionees WHERE 
                                         <?php echo $student['audition_date'] ? date('M d, Y H:i', strtotime($student['audition_date'])) : '<em class="text-muted">Not scheduled</em>'; ?>
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" 
+                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#editModal" onclick="editStudent(<?php echo htmlspecialchars(json_encode($student)); ?>)">
                                             <i class="fas fa-edit"></i> Manage
                                         </button>

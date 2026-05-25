@@ -6,9 +6,9 @@ startSession();
 // If already logged in, redirect to appropriate dashboard
 if (isLoggedIn()) {
     if ($_SESSION['user_role'] === 'admin') {
-        header("Location: /Etheatro/admin/manageregistrants.php");
+        header("Location: " . urlFor('admin/manageregistrants.php'));
     } else {
-        header("Location: /Etheatro/students/dashboard.php");
+        header("Location: " . urlFor('students/dashboard.php'));
     }
     exit();
 }
@@ -43,7 +43,7 @@ if (isset($_GET['logout'])) {
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="/">
+            <a class="navbar-brand fw-bold" href="<?php echo urlFor(''); ?>">
                 <i class="fas fa-theater-masks"></i> ETHEATRO
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

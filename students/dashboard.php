@@ -21,21 +21,21 @@ $rejected_count = 0;
 if ($user['role'] === 'admin') {
     $pending_result = $conn->query("SELECT COUNT(*) as count FROM auditionees WHERE role = 'student' AND status = 'Pending'");
     $pending_count = $pending_result->fetch_assoc()['count'];
-    
+
     $ready_result = $conn->query("SELECT COUNT(*) as count FROM auditionees WHERE role = 'student' AND status = 'Ready to Audition'");
     $ready_count = $ready_result->fetch_assoc()['count'];
-    
+
     $approved_result = $conn->query("SELECT COUNT(*) as count FROM auditionees WHERE role = 'student' AND status = 'Approved'");
     $approved_count = $approved_result->fetch_assoc()['count'];
-    
+
     $rejected_result = $conn->query("SELECT COUNT(*) as count FROM auditionees WHERE role = 'student' AND status = 'Rejected'");
     $rejected_count = $rejected_result->fetch_assoc()['count'];
 }
 
 // Get announcements
 $announcements = [];
-$announcements_query = $conn->query("SELECT a.*, b.first_name, b.last_name FROM announcements a 
-                                    JOIN auditionees b ON a.created_by = b.id 
+$announcements_query = $conn->query("SELECT a.*, b.first_name, b.last_name FROM announcements a
+                                    JOIN auditionees b ON a.created_by = b.id
                                     ORDER BY a.created_at DESC LIMIT 3");
 while ($ann = $announcements_query->fetch_assoc()) {
     $announcements[] = $ann;
@@ -59,7 +59,7 @@ $unread_count = $unread_result ? $unread_result->fetch_assoc()['count'] : 0;
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/Etheatro/">
+            <a class="navbar-brand" href="<?php echo urlFor(''); ?>">
                 <i class="fas fa-theater-masks"></i> ETHEATRO
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -102,7 +102,7 @@ $unread_count = $unread_result ? $unread_result->fetch_assoc()['count'] : 0;
                             <i class="fas fa-wave-hand"></i> Welcome, <?php echo $_SESSION['user_name']; ?>!
                         </h1>
                         <p class="text-muted mb-0">
-                            <?php 
+                            <?php
                             $date = date('F j, Y');
                             if ($user['role'] === 'admin') {
                                 echo "Admin Dashboard - Manage Auditions";
@@ -153,7 +153,7 @@ $unread_count = $unread_result ? $unread_result->fetch_assoc()['count'] : 0;
                             <i class="fas fa-users fa-3x text-primary mb-3"></i>
                             <h5 class="card-title">Manage Registrants</h5>
                             <p class="text-muted">Review and manage student registrations</p>
-                            <a href="/Etheatro/admin/manageregistrants.php" class="btn btn-primary btn-sm">Go to Registrants</a>
+                            <a href="<?php echo urlFor('admin/manageregistrants.php'); ?>" class="btn btn-primary btn-sm">Go to Registrants</a>
                         </div>
                     </div>
                 </div>
@@ -163,7 +163,7 @@ $unread_count = $unread_result ? $unread_result->fetch_assoc()['count'] : 0;
                             <i class="fas fa-calendar-alt fa-3x text-primary mb-3"></i>
                             <h5 class="card-title">Manage Auditions</h5>
                             <p class="text-muted">Schedule auditions and set status</p>
-                            <a href="/Etheatro/admin/manage_auditionees.php" class="btn btn-primary btn-sm">Manage Auditions</a>
+                            <a href="<?php echo urlFor('admin/manage_auditionees.php'); ?>" class="btn btn-primary btn-sm">Manage Auditions</a>
                         </div>
                     </div>
                 </div>
@@ -173,7 +173,7 @@ $unread_count = $unread_result ? $unread_result->fetch_assoc()['count'] : 0;
                             <i class="fas fa-bullhorn fa-3x text-primary mb-3"></i>
                             <h5 class="card-title">Announcements</h5>
                             <p class="text-muted">Post announcements to students</p>
-                            <a href="/Etheatro/admin/announcements.php" class="btn btn-primary btn-sm">Post Announcements</a>
+                            <a href="<?php echo urlFor('admin/announcements.php'); ?>" class="btn btn-primary btn-sm">Post Announcements</a>
                         </div>
                     </div>
                 </div>
@@ -227,7 +227,7 @@ $unread_count = $unread_result ? $unread_result->fetch_assoc()['count'] : 0;
                             <?php foreach ($announcements as $announcement): ?>
                                 <div class="alert alert-info border-start border-5 border-primary">
                                     <small class="text-muted">
-                                        Posted by: <strong><?php echo $announcement['first_name'] . ' ' . $announcement['last_name']; ?></strong> 
+                                        Posted by: <strong><?php echo $announcement['first_name'] . ' ' . $announcement['last_name']; ?></strong>
                                         on <?php echo date('M d, Y H:i', strtotime($announcement['created_at'])); ?>
                                     </small>
                                     <p class="mt-2 mb-0"><?php echo $announcement['message']; ?></p>

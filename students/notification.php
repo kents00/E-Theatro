@@ -36,7 +36,7 @@ $unread_count = $unread_result->fetch_assoc()['count'] ?? 0;
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/Etheatro/">
+            <a class="navbar-brand" href="<?php echo urlFor(''); ?>">
                 <i class="fas fa-theater-masks"></i> ETHEATRO
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -89,7 +89,7 @@ $unread_count = $unread_result->fetch_assoc()['count'] ?? 0;
                                 <div class="d-flex justify-content-between align-items-start">
                                     <div class="flex-grow-1">
                                         <div class="d-flex align-items-center mb-2">
-                                            <span class="badge badge-<?php 
+                                            <span class="badge badge-<?php
                                                 switch($notif['type']) {
                                                     case 'status_update': echo 'info'; break;
                                                     case 'announcement': echo 'warning'; break;
@@ -97,7 +97,7 @@ $unread_count = $unread_result->fetch_assoc()['count'] ?? 0;
                                                     default: echo 'secondary';
                                                 }
                                             ?> me-2">
-                                                <?php 
+                                                <?php
                                                 switch($notif['type']) {
                                                     case 'status_update': echo '<i class="fas fa-sync-alt"></i> Status Update'; break;
                                                     case 'announcement': echo '<i class="fas fa-bullhorn"></i> Announcement'; break;

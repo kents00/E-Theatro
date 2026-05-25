@@ -102,6 +102,27 @@ function verifyPassword($password, $hash) {
     return password_verify($password, $hash);
 }
 
+function appBasePath() {
+    $base = $_ENV['APP_BASE_PATH'] ?? '';
+    $base = trim($base);
+    if ($base === '' || $base === '/') {
+        return '';
+    }
+
+    return '/' . trim($base, '/');
+}
+
+function urlFor($path = '') {
+    $base = appBasePath();
+    $path = '/' . ltrim($path, '/');
+
+    if ($path === '/') {
+        return $base === '' ? '/' : $base . '/';
+    }
+
+    return $base . $path;
+}
+
 // Session management
 function startSession() {
     if (session_status() === PHP_SESSION_NONE) {
@@ -116,7 +137,7 @@ function isLoggedIn() {
 
 function requireLogin() {
     if (!isLoggedIn()) {
-        header("Location: /Etheatro/auth/login.php");
+        header("Location: " . urlFor('auth/login.php'));
         exit();
     }
 }
@@ -124,7 +145,7 @@ function requireLogin() {
 function requireAdmin() {
     requireLogin();
     if ($_SESSION['user_role'] !== 'admin') {
-        header("Location: /Etheatro/");
+        header("Location: " . urlFor(''));
         exit();
     }
 }
@@ -140,7 +161,7 @@ function logout() {
     session_destroy();
     unset($_SESSION);
     setcookie(session_name(), '', 0, '/');
-    header("Location: /Etheatro/");
+    header("Location: " . urlFor(''));
     exit();
 }
 

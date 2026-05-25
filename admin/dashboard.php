@@ -20,8 +20,8 @@ while ($row = $reg_result->fetch_assoc()) {
 
 // Get recent announcements
 $recent_announcements = [];
-$ann_result = $conn->query("SELECT a.*, b.first_name, b.last_name FROM announcements a 
-                           JOIN auditionees b ON a.created_by = b.id 
+$ann_result = $conn->query("SELECT a.*, b.first_name, b.last_name FROM announcements a
+                           JOIN auditionees b ON a.created_by = b.id
                            ORDER BY a.created_at DESC LIMIT 3");
 while ($row = $ann_result->fetch_assoc()) {
     $recent_announcements[] = $row;
@@ -50,7 +50,7 @@ while ($row = $ann_result->fetch_assoc()) {
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/Etheatro/">
+            <a class="navbar-brand" href="<?php echo urlFor(''); ?>">
                 <i class="fas fa-theater-masks"></i> ETHEATRO
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -198,7 +198,7 @@ while ($row = $ann_result->fetch_assoc()) {
                 </a>
             </div>
             <div class="col-md-6 col-lg-3">
-                <a href="/Etheatro/" class="card border-0 shadow-sm text-decoration-none h-100">
+                <a href="<?php echo urlFor(''); ?>" class="card border-0 shadow-sm text-decoration-none h-100">
                     <div class="card-body text-center">
                         <i class="fas fa-home fa-2x text-primary mb-3"></i>
                         <h6>System Home</h6>

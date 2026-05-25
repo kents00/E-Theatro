@@ -10,12 +10,12 @@ if (isset($_GET['logout']) || isset($_POST['logout'])) {
 // Handle other functions if needed
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
-    
+
     switch($action) {
         case 'logout':
             logout();
             break;
-        
+
         case 'check_session':
             if (isLoggedIn()) {
                 echo json_encode(['status' => 'logged_in', 'user' => $_SESSION['user_name']]);
@@ -23,7 +23,7 @@ if (isset($_GET['action'])) {
                 echo json_encode(['status' => 'not_logged_in']);
             }
             break;
-        
+
         default:
             echo json_encode(['status' => 'unknown_action']);
             break;
@@ -32,6 +32,6 @@ if (isset($_GET['action'])) {
 }
 
 // Default redirect
-header("Location: /Etheatro/");
+header("Location: " . urlFor(''));
 exit();
 ?>

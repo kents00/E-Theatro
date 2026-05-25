@@ -7,27 +7,27 @@ $success = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = sanitize($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
-    
+
     if (empty($email) || empty($password)) {
         $error = 'Email and password are required.';
     } else {
         $email_escaped = $conn->real_escape_string($email);
         $result = $conn->query("SELECT * FROM auditionees WHERE email = '$email_escaped'");
-        
+
         if ($result && $result->num_rows > 0) {
             $user = $result->fetch_assoc();
-            
+
             if (verifyPassword($password, $user['password'])) {
                 startSession();
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['first_name'] . ' ' . $user['last_name'];
                 $_SESSION['user_role'] = $user['role'];
                 $_SESSION['user_email'] = $user['email'];
-                
+
                 if ($user['role'] === 'admin') {
-                    header("Location: /Etheatro/admin/dashboard.php");
+                    header("Location: " . urlFor('admin/dashboard.php'));
                 } else {
-                    header("Location: /Etheatro/students/dashboard.php");
+                    header("Location: " . urlFor('students/dashboard.php'));
                 }
                 exit();
             } else {
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span class="input-group-text">
                                     <i class="fas fa-envelope"></i>
                                 </span>
-                                <input type="email" class="form-control" id="email" name="email" 
+                                <input type="email" class="form-control" id="email" name="email"
                                     placeholder="Enter your email" required>
                             </div>
                         </div>
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span class="input-group-text">
                                     <i class="fas fa-lock"></i>
                                 </span>
-                                <input type="password" class="form-control" id="password" name="password" 
+                                <input type="password" class="form-control" id="password" name="password"
                                     placeholder="Enter your password" required>
                             </div>
                         </div>
@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <!-- Links -->
                     <div class="text-center">
-                        <p class="mb-2">Don't have an account? 
+                        <p class="mb-2">Don't have an account?
                             <a href="register.php" class="text-primary fw-bold text-decoration-none">Register here</a>
                         </p>
                         <p class="mb-0">

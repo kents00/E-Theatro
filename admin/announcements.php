@@ -9,17 +9,17 @@ $error = '';
 // Post announcement
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'])) {
     $message = sanitize($_POST['message']);
-    
+
     if (empty($message)) {
         $error = 'Message cannot be empty.';
     } else {
         $message_escaped = $conn->real_escape_string($message);
         $query = "INSERT INTO announcements (message, created_by) VALUES ('$message_escaped', $admin_id)";
-        
+
         if ($conn->query($query)) {
             $success = 'Announcement posted successfully!';
             $_POST['message'] = '';
-            
+
             // Create notifications for all students
             $students_query = $conn->query("SELECT id FROM auditionees WHERE role = 'student'");
             while ($student = $students_query->fetch_assoc()) {
@@ -41,8 +41,8 @@ if (isset($_GET['delete'])) {
 
 // Get all announcements
 $announcements = [];
-$query = "SELECT a.*, b.first_name, b.last_name FROM announcements a 
-          JOIN auditionees b ON a.created_by = b.id 
+$query = "SELECT a.*, b.first_name, b.last_name FROM announcements a
+          JOIN auditionees b ON a.created_by = b.id
           ORDER BY a.created_at DESC";
 $result = $conn->query($query);
 while ($row = $result->fetch_assoc()) {
@@ -63,7 +63,7 @@ while ($row = $result->fetch_assoc()) {
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/Etheatro/">
+            <a class="navbar-brand" href="<?php echo urlFor(''); ?>">
                 <i class="fas fa-theater-masks"></i> ETHEATRO
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -72,7 +72,7 @@ while ($row = $result->fetch_assoc()) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/Etheatro/students/dashboard.php">Dashboard</a>
+                        <a class="nav-link" href="<?php echo urlFor('students/dashboard.php'); ?>">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="manageregistrants.php">Manage Registrants</a>
@@ -126,7 +126,7 @@ while ($row = $result->fetch_assoc()) {
                         <form method="POST">
                             <div class="form-group mb-3">
                                 <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" id="message" name="message" rows="5" 
+                                <textarea class="form-control" id="message" name="message" rows="5"
                                     placeholder="Enter your announcement here..." required></textarea>
                                 <small class="form-text text-muted d-block mt-2">
                                     This message will be sent to all registered auditionees.

@@ -13,21 +13,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
     if ($action_type === 'approve_for_audition') {
         $conn->query("UPDATE auditionees SET status = 'Ready to Audition' WHERE id = $student_id AND role = 'student'");
-        
+
         // Create notification
         $message = "Your application has been approved. You are now ready to audition!";
         $message_escaped = $conn->real_escape_string($message);
         $conn->query("INSERT INTO notifications (auditionee_id, message, type) VALUES ($student_id, '$message_escaped', 'status_update')");
-        
+
         $success = 'Student approved for audition!';
     } elseif ($action_type === 'reject') {
         $conn->query("UPDATE auditionees SET status = 'Rejected' WHERE id = $student_id AND role = 'student'");
-        
+
         // Create notification
         $message = "Your application was not successful this round. Thank you for your interest.";
         $message_escaped = $conn->real_escape_string($message);
         $conn->query("INSERT INTO notifications (auditionee_id, message, type) VALUES ($student_id, '$message_escaped', 'status_update')");
-        
+
         $success = 'Student rejected.';
     } elseif ($action_type === 'reset_to_pending') {
         $conn->query("UPDATE auditionees SET status = 'Pending' WHERE id = $student_id AND role = 'student'");
@@ -76,7 +76,7 @@ $ready_count = $conn->query("SELECT COUNT(*) as count FROM auditionees WHERE rol
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/Etheatro/">
+            <a class="navbar-brand" href="<?php echo urlFor(''); ?>">
                 <i class="fas fa-theater-masks"></i> ETHEATRO
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -85,7 +85,7 @@ $ready_count = $conn->query("SELECT COUNT(*) as count FROM auditionees WHERE rol
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/Etheatro/students/dashboard.php">Dashboard</a>
+                        <a class="nav-link" href="<?php echo urlFor('students/dashboard.php'); ?>">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="manageregistrants.php">Manage Registrants</a>
@@ -156,7 +156,7 @@ $ready_count = $conn->query("SELECT COUNT(*) as count FROM auditionees WHERE rol
                 <form method="GET" class="row g-3">
                     <div class="col-md-6">
                         <label for="search" class="form-label">Search</label>
-                        <input type="text" class="form-control" id="search" name="search" 
+                        <input type="text" class="form-control" id="search" name="search"
                             placeholder="Name, School ID, or Email" value="<?php echo htmlspecialchars($search); ?>">
                     </div>
                     <div class="col-md-4">

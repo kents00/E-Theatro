@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($first_name) || empty($last_name)) {
         $error = 'First name and last name are required.';
     } else {
-        $query = "UPDATE auditionees SET 
+        $query = "UPDATE auditionees SET
                   first_name = '$first_name',
                   middle_initial = '$middle_initial',
                   last_name = '$last_name',
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   department = '$department',
                   talent = '$talent'
                   WHERE id = $user_id";
-        
+
         if ($conn->query($query)) {
             $success = 'Profile updated successfully!';
             $_SESSION['user_name'] = $first_name . ' ' . $last_name;
@@ -55,7 +55,7 @@ $unread_count = $unread_result->fetch_assoc()['count'] ?? 0;
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/Etheatro/">
+            <a class="navbar-brand" href="<?php echo urlFor(''); ?>">
                 <i class="fas fa-theater-masks"></i> ETHEATRO
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -122,17 +122,17 @@ $unread_count = $unread_result->fetch_assoc()['count'] ?? 0;
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="first_name" class="form-label">First Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="first_name" name="first_name" 
+                                    <input type="text" class="form-control" id="first_name" name="first_name"
                                         value="<?php echo htmlspecialchars($user['first_name']); ?>" required>
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label for="middle_initial" class="form-label">Middle Initial</label>
-                                    <input type="text" class="form-control" id="middle_initial" name="middle_initial" 
+                                    <input type="text" class="form-control" id="middle_initial" name="middle_initial"
                                         placeholder="D" maxlength="1" value="<?php echo $user['middle_initial'] ?? ''; ?>">
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label for="last_name" class="form-label">Last Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="last_name" name="last_name" 
+                                    <input type="text" class="form-control" id="last_name" name="last_name"
                                         value="<?php echo htmlspecialchars($user['last_name']); ?>" required>
                                 </div>
                             </div>
@@ -167,7 +167,7 @@ $unread_count = $unread_result->fetch_assoc()['count'] ?? 0;
                             <!-- Row 3 -->
                             <div class="form-group mb-4">
                                 <label for="talent" class="form-label">Talent</label>
-                                <input type="text" class="form-control" id="talent" name="talent" 
+                                <input type="text" class="form-control" id="talent" name="talent"
                                     placeholder="e.g., Singing, Dancing, Acting" value="<?php echo htmlspecialchars($user['talent']); ?>">
                             </div>
 
